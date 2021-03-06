@@ -1,0 +1,115 @@
+﻿<Window x:Class="PasswordGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Closing="OnWindowClosing"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        Title="Passwort-Generator">
+
+    <Window.Resources>
+        <Storyboard x:Key="FadeOutFadeIn">
+            <DoubleAnimation Duration="0:0:0.2"
+                             From="1" To="0"
+                             Storyboard.TargetName="KeyGrid"
+                             Storyboard.TargetProperty="(Button.Opacity)"/>
+            <ObjectAnimationUsingKeyFrames BeginTime="00:00:0.2"
+                                           Storyboard.TargetName="KeyGrid"
+                                           Storyboard.TargetProperty="(Grid.Visibility)">
+                <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="0:0:0.2"
+                             Duration="0:0:0.2"
+                             From="0" To="1"
+                             Storyboard.TargetName="InputBox"
+                             Storyboard.TargetProperty="(TextBox.Opacity)"/>
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="KeyGrid" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"
+                       Content="Sch_lüssel:"
+                       Margin="20,20,15,0"
+                       Padding="0"
+                       Target="{Binding ElementName=KeyBox}"
+                       VerticalAlignment="Center"/>
+                <TextBox x:Name="KeyBox"
+                         Grid.Column="1"
+                         Height="25"
+                         Margin="0,20,20,0"
+                         VerticalContentAlignment="Center"/>
+                <Button x:Name="GoButton"
+                        Grid.Column="2"
+                        Click="OnGoButtonClick"
+                        Content="_Weiter"
+                        Height="25" Width="75"
+                        IsDefault="True"
+                        Margin="0,20,20,0"/>
+            </Grid>
+
+            <TextBox x:Name="InputBox"
+                     Grid.Column="0"
+                     Height="25" Width="305"
+                     KeyUp="OnInputBoxKeyUp"
+                     Margin="20,20,20,0"
+                     Opacity="0"
+                     VerticalContentAlignment="Center"
+                     Visibility="Collapsed"/>
+        </Grid>
+
+        <TextBox x:Name="OutputBox"
+                 Grid.Row="1"
+                 Height="25" Width="305"
+                 IsEnabled="False"
+                 Margin="20,20,20,0"
+                 VerticalContentAlignment="Center"/>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="CopyButton"
+                    Grid.Column="0"
+                    Click="OnCopyButtonClick"
+                    Content="_Kopieren"
+                    Height="25" Width="75"
+                    IsEnabled="False"
+                    Margin="20"/>
+            <Button Grid.Column="1"
+                    Click="OnOptionsButtonClick"
+                    Content="_Optionen…"
+                    Height="25" Width="75"
+                    Margin="20"/>
+            <Button Grid.Column="2"
+                    Click="OnCloseButtonClick"
+                    Content="S_chließen"
+                    Height="25" Width="75"
+                    IsCancel="True"
+                    Margin="20"/>
+        </Grid>
+    </Grid>
+</Window>
